@@ -1,0 +1,36 @@
+<resources>
+    <string name="app_name">DayyBook</string>
+
+
+    <string name="facebook_app_id">809446429386343</string>
+    <string name="fb_login_protocol_scheme">fb809446429386343</string>
+
+
+
+    <string name="other">Diğer</string>
+    <string name="contact_form_name">Adınız</string>
+    <string name="contact_form_email">E-Mail</string>
+    <string name="contact_form_subject">Konu</string>
+    <string name="contact_form_message">Mesaj</string>
+    <string name="contact_form_button">Gönder</string>
+
+    <string name="todo">TODO</string>
+
+    <string name="ekle">Ekle</string>
+    <string name="title_home">Ana Sayfa</string>
+    <string name="incele">İncele</string>
+    <string name="choose_from_gallery">Galeriden seç</string>
+    <string name="take_a_photo">Fotoğraf çek</string>
+    <string name="log_out">Log out</string>
+
+    <string name="auto_theme_mode">Oto Gündüz/Gece Modu</string>
+    <string name="close">Kapalı</string>
+    <string name="open">Açık</string>
+
+    <string name="sign_up_label">Sign Up</string>
+    <string name="log_in_label">Log In</string>
+    <string name="forgot_password">Forgot Password?</string>
+    <string name="otherLogin">Other Login</string>
+    <string name="confirm_hint">Confirm Password</string>
+
+</resources>

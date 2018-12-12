@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "210504538833",
+    "firebase_url": "https://dayybook-erdioran.firebaseio.com",
+    "project_id": "dayybook-erdioran",
+    "storage_bucket": "dayybook-erdioran.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:210504538833:android:1f98dc55ea09bda9",
+        "android_client_info": {
+          "package_name": "com.erdioran.dayybook"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "210504538833-ld04qf1vkaeipah5ri3idvo39h8j0bgq.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.erdioran.dayybook",
+            "certificate_hash": "60da8428132749a35102b981f52fdde4b37d7fa9"
+          }
+        },
+        {
+          "client_id": "210504538833-pih9nqfo60u2oocd8d19d8ie016bqjsp.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBjq9FDUxwOLgIwAYB5Zr2SA9G5vLjg6aA"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "210504538833-pih9nqfo60u2oocd8d19d8ie016bqjsp.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
