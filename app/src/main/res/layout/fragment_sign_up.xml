@@ -2,7 +2,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/root"
-    tools:background="@color/color_sign_up"
+    android:background="@color/color_sign_up"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -16,6 +16,7 @@
 
     <View
         android:id="@+id/logo"
+        android:src="@drawable/map_logo"
         android:focusable="true"
         android:focusableInTouchMode="true"
         app:layout_constraintTop_toTopOf="@+id/guideline"
@@ -105,40 +106,5 @@
         app:layout_constraintTop_toTopOf="@id/caption"
         app:layout_constraintVertical_bias="0.394" />
 
-    <ImageView
-        android:src="@drawable/facebook"
-        android:layout_width="@dimen/option_size"
-        android:layout_height="@dimen/option_size"
-        android:id="@+id/first"
-        app:layout_constraintRight_toLeftOf="@+id/second"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.95"
-        android:contentDescription="@string/todo" />
-
-    <ImageView
-        android:src="@drawable/linkedin"
-        android:layout_width="@dimen/option_size"
-        android:layout_height="@dimen/option_size"
-        android:id="@+id/second"
-        app:layout_constraintLeft_toRightOf="@+id/first"
-        app:layout_constraintRight_toLeftOf="@+id/last"
-        app:layout_constraintTop_toTopOf="@+id/first"
-        app:layout_constraintBottom_toBottomOf="@+id/first"
-        app:layout_constraintVertical_bias="0.0"
-        android:contentDescription="@string/todo" />
-
-    <ImageView
-        android:src="@drawable/twitter"
-        android:id="@+id/last"
-        android:layout_width="@dimen/option_size"
-        android:layout_height="@dimen/option_size"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintLeft_toRightOf="@+id/second"
-        app:layout_constraintBottom_toBottomOf="@+id/second"
-        app:layout_constraintTop_toTopOf="@+id/second"
-        app:layout_constraintVertical_bias="1.0"
-        android:contentDescription="@string/todo" />
 
 </android.support.constraint.ConstraintLayout>

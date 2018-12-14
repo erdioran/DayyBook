@@ -150,7 +150,7 @@ public class LogInFragment extends AuthFragment implements View.OnClickListener 
 
         try {
             PackageInfo info = getActivity().getPackageManager().getPackageInfo(
-                    "dentest.erdioran.com.dentest",
+                    "com.erdioran.dayybook",
                     PackageManager.GET_SIGNATURES);
             for (Signature signature : info.signatures) {
                 MessageDigest md = MessageDigest.getInstance("SHA");

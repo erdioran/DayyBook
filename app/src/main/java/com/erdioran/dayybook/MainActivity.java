@@ -43,11 +43,13 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
 
         try {
-            PackageInfo info = getPackageManager().getPackageInfo("com.erdioran.dayybook", PackageManager.GET_SIGNATURES);
+            PackageInfo info = getPackageManager().getPackageInfo(
+                    "com.erdioran.dayybook",
+                    PackageManager.GET_SIGNATURES);
             for (Signature signature : info.signatures) {
                 MessageDigest md = MessageDigest.getInstance("SHA");
                 md.update(signature.toByteArray());
-                Log.e("MY KEY HASH:", Base64.encodeToString(md.digest(), Base64.DEFAULT));
+                Log.d("KeyHash:", Base64.encodeToString(md.digest(), Base64.DEFAULT));
             }
         } catch (PackageManager.NameNotFoundException e) {
 

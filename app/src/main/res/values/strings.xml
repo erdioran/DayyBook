@@ -32,5 +32,7 @@
     <string name="forgot_password">Forgot Password?</string>
     <string name="otherLogin">Other Login</string>
     <string name="confirm_hint">Confirm Password</string>
+    <string name="login">Login</string>
+    <string name="signUp">Sign Up</string>
 
 </resources>

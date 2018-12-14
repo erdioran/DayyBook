@@ -1,15 +1,17 @@
 package com.erdioran.dayybook.StartLogin;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
 
 
-
+import android.support.design.widget.TextInputEditText;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 
 
+import android.text.TextUtils;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,15 +21,27 @@ import butterknife.ButterKnife;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.widget.Toast;
 
+import com.erdioran.dayybook.MainActivity;
 import com.erdioran.dayybook.R;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
 import com.transitionseverywhere.*;
 
 import butterknife.OnClick;
 import butterknife.BindView;
 
 public abstract class AuthFragment extends Fragment {
+
+    private FirebaseAuth auth;
+
+
+    private VerticalTextView buttonSignUp;
+    private TextInputEditText email_input_edit, password_input_edit,confirm_password_edit;
 
     protected Callback callback;
 
@@ -50,14 +64,30 @@ public abstract class AuthFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View root=inflater.inflate(authLayout(),container,false);
         ButterKnife.bind(this,root);
-        KeyboardVisibilityEvent.setEventListener(getActivity(), isOpen -> {
-            callback.scale(isOpen);
-            if(!isOpen){
-                clearFocus();
-            }
-        });
         return root;
+
+
+
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     public void setCallback(@NonNull Callback callback) {
         this.callback = callback;
