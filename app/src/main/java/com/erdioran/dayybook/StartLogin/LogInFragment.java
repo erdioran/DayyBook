@@ -24,6 +24,7 @@ import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
 import com.facebook.FacebookSdk;
+import com.facebook.appevents.AppEventsLogger;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
@@ -57,6 +58,7 @@ import android.widget.Toast;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.Arrays;
 import java.util.List;
 
 import butterknife.BindViews;
@@ -82,7 +84,6 @@ public class LogInFragment extends AuthFragment implements View.OnClickListener 
     private FirebaseAuth mAuth;
     private FirebaseUser firebaseUser;
     private VerticalTextView buttonLogin;
-    private FirebaseAuth firebaseAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
 
     private static final String TAG = "MainActivity";
@@ -91,6 +92,26 @@ public class LogInFragment extends AuthFragment implements View.OnClickListener 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+
+        mAuth = FirebaseAuth.getInstance();
+        firebaseUser = mAuth.getCurrentUser();
+        if (firebaseUser == null) {
+
+            FacebookSdk.sdkInitialize(getApplicationContext());
+            AppEventsLogger.activateApp(getActivity());
+            loginButton = (LoginButton) view.findViewById(R.id.first);
+
+            callbackManager = CallbackManager.Factory.create();
+            loginButton.setReadPermissions(Arrays.asList("email"));
+
+
+        } else {
+            Intent intent = new Intent(getActivity(), MainActivity.class);
+            startActivity(intent);
+        }
+
+
         if (view != null) {
             caption.setText(getString(R.string.log_in_label));
             view.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.color_log_in));
@@ -119,15 +140,6 @@ public class LogInFragment extends AuthFragment implements View.OnClickListener 
         email_input_edit = (TextInputEditText) getView().findViewById(R.id.email_input_edit);
         password_input_edit = (TextInputEditText) getView().findViewById(R.id.password_input_edit);
         buttonLogin = (VerticalTextView) getView().findViewById(R.id.caption);
-        mAuth = FirebaseAuth.getInstance();
-        firebaseUser = mAuth.getCurrentUser(); // authenticated user
-
-        if (firebaseUser != null) { // check user session
-
-            Intent i = new Intent(getActivity(), MainActivity.class);
-            startActivity(i);
-            getActivity().finish();
-        }
 
 
         buttonLogin.setOnClickListener(new View.OnClickListener() {
@@ -163,32 +175,6 @@ public class LogInFragment extends AuthFragment implements View.OnClickListener 
 
         }
 
-        FacebookSdk.sdkInitialize(getApplicationContext());
-        //AppEventsLogger.activateApp(this);
-
-
-        firebaseAuth = FirebaseAuth.getInstance();
-        callbackManager = CallbackManager.Factory.create();
-
-        loginButton = (LoginButton) getView().findViewById(R.id.first);
-
-        loginButton.setReadPermissions("email", "public_profile");//user_status, publish_actions..
-        loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
-            @Override
-            public void onSuccess(LoginResult loginResult) {
-                handleFacebookAccessToken(loginResult.getAccessToken());
-            }
-
-            @Override
-            public void onCancel() {
-                Toast.makeText(getActivity(), "Sign In canceled", Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void onError(FacebookException error) {
-                Toast.makeText(getActivity(), "Something bad happened", Toast.LENGTH_SHORT).show();
-            }
-        });
 
         mAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override
@@ -219,6 +205,26 @@ public class LogInFragment extends AuthFragment implements View.OnClickListener 
     }
 
 
+    public void buttonClickLoginFb(View v) {
+        LoginManager.getInstance().registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
+            @Override
+            public void onSuccess(LoginResult loginResult) {
+                handleFacebookAccessToken(loginResult.getAccessToken());
+            }
+
+            @Override
+            public void onCancel() {
+                Toast.makeText(getApplicationContext(), "User cancelled it", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onError(FacebookException error) {
+                Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+
     private void loginFunc() {
 
         mAuth.signInWithEmailAndPassword(userName, userPassword).addOnCompleteListener(getActivity(),
@@ -244,14 +250,14 @@ public class LogInFragment extends AuthFragment implements View.OnClickListener 
     @Override
     public void onStart() {
         super.onStart();
-        firebaseAuth.addAuthStateListener(mAuthListener);
+        mAuth.addAuthStateListener(mAuthListener);
     }
 
     @Override
     public void onStop() {
         super.onStop();
         if (mAuthListener != null) {
-            firebaseAuth.removeAuthStateListener(mAuthListener);
+            mAuth.removeAuthStateListener(mAuthListener);
         }
     }
 
@@ -260,15 +266,17 @@ public class LogInFragment extends AuthFragment implements View.OnClickListener 
 
         Log.d(TAG, "ZZZZZZZ: " + accessToken.getToken());
         AuthCredential credential = FacebookAuthProvider.getCredential(accessToken.getToken());
-        firebaseAuth.signInWithCredential(credential)
-                .addOnCompleteListener(getActivity(), new OnCompleteListener<AuthResult>() {
+        mAuth.signInWithCredential(credential)
+                .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (!task.isSuccessful()) {
-                            Toast.makeText(getActivity(), "Authentication failed.",
-                                    Toast.LENGTH_SHORT).show();
+                        if (task.isSuccessful()){
+                            FirebaseUser myuserobj=mAuth.getCurrentUser();
+                            updateUI(myuserobj);
+                        }else
+                        {
+                            Toast.makeText(getApplicationContext(),"Could not register to firebase",Toast.LENGTH_SHORT).show();
                         }
-
                     }
                 });
 
@@ -276,17 +284,21 @@ public class LogInFragment extends AuthFragment implements View.OnClickListener 
         startActivity(intent1);
     }
 
+    private void updateUI(FirebaseUser myuserobj) {
+
+    }
+
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+        callbackManager.onActivityResult(requestCode,resultCode, data);
         super.onActivityResult(requestCode, resultCode, data);
-        callbackManager.onActivityResult(requestCode,
-                resultCode, data);
     }
 
     @Override
     public void onClick(View v) {
-        firebaseAuth.signOut();
+        mAuth.signOut();
         LoginManager.getInstance().logOut();
     }
 

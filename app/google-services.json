@@ -23,6 +23,14 @@
           }
         },
         {
+          "client_id": "210504538833-u35g80sptm1o32kcf15k3ft2psjgo3si.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.erdioran.dayybook",
+            "certificate_hash": "a93a0d45b1647028b964316a2fa3987bb923c07d"
+          }
+        },
+        {
           "client_id": "210504538833-pih9nqfo60u2oocd8d19d8ie016bqjsp.apps.googleusercontent.com",
           "client_type": 3
         }
